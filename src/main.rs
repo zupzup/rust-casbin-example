@@ -163,12 +163,7 @@ async fn user_authentication(
         Sessions,
     ),
 ) -> WebResult<UserCtx> {
-    let path = args.0;
-    let enforcer = args.1;
-    let headers = args.2;
-    let method = args.3;
-    let user_map = args.4;
-    let sessions = args.5;
+    let (path, enforcer, headers, method, user_map, sessions) = args;
 
     let token = token_from_header(&headers).map_err(|e| warp::reject::custom(e))?;
     let user_id = match sessions.read().await.get(&token) {
